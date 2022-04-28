@@ -48,4 +48,20 @@ app.post('/cadastraCliente', (req, res) => {
     } 
 });
 
-app.listen(porta,()=> {console.log(`Rodando na porta ${porta}`)}) 
+app.delete('/deletaCliente/:id', (req, res) => 
+{
+    const id = req.params.id;
+    const cliente = clientes.find(c => c.id == id);
+    if (!cliente)
+    {
+        res.status(404).json({mensagem: 'Cliente não encontrado'});
+        return;
+    }
+    clientes = clientes.filter(c => c.id != id);
+    res.status(200).json({mensagem: `Cliente ${cliente.nome} deletado`});
+});
+
+app.listen(porta, () => 
+    {
+        console.log(`Rodando na porta ${porta}`)
+    }); 
